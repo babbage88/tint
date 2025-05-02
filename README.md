@@ -1,5 +1,7 @@
 # `tint`: 🌈 **slog.Handler** that writes tinted logs
 
+## This is a fork of the github.com/lmittmann/tint Package
+
 [![Go Reference](https://pkg.go.dev/badge/github.com/babbage88/tint.svg)](https://pkg.go.dev/github.com/babbage88/tint#section-documentation)
 [![Go Report Card](https://goreportcard.com/badge/github.com/babbage88/tint)](https://goreportcard.com/report/github.com/babbage88/tint)
 
@@ -19,7 +21,7 @@ The output format can be customized using [`Options`](https://pkg.go.dev/github.
 which is a drop-in replacement for [`slog.HandlerOptions`](https://pkg.go.dev/log/slog#HandlerOptions).
 
 ```
-go get github.com/babbage88/tint
+go get github.com/lmittmann/tint
 ```
 
 ## Usage
