@@ -13,7 +13,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/lmittmann/tint"
+	"github.com/babbage88/tint"
 )
 
 var faketime = time.Date(2009, time.November, 10, 23, 0, 0, 0, time.UTC)
@@ -258,7 +258,7 @@ func TestHandler(t *testing.T) {
 			Want: `Nov 10 23:00:00.000 INF test ""=""`,
 		},
 
-		{ // https://github.com/lmittmann/tint/issues/8
+		{ // https://github.com/babbage88/tint/issues/8
 			F: func(l *slog.Logger) {
 				l.Log(context.TODO(), slog.LevelInfo+1, "test")
 			},
@@ -274,19 +274,19 @@ func TestHandler(t *testing.T) {
 			},
 			Want: `Nov 10 23:00:00.000 DBG-1 test`,
 		},
-		{ // https://github.com/lmittmann/tint/issues/12
+		{ // https://github.com/babbage88/tint/issues/12
 			F: func(l *slog.Logger) {
 				l.Error("test", slog.Any("error", errors.New("fail")))
 			},
 			Want: `Nov 10 23:00:00.000 ERR test error=fail`,
 		},
-		{ // https://github.com/lmittmann/tint/issues/15
+		{ // https://github.com/babbage88/tint/issues/15
 			F: func(l *slog.Logger) {
 				l.Error("test", tint.Err(nil))
 			},
 			Want: `Nov 10 23:00:00.000 ERR test err=<nil>`,
 		},
-		{ // https://github.com/lmittmann/tint/pull/26
+		{ // https://github.com/babbage88/tint/pull/26
 			Opts: &tint.Options{
 				ReplaceAttr: func(groups []string, a slog.Attr) slog.Attr {
 					if a.Key == slog.TimeKey && len(groups) == 0 {
@@ -301,13 +301,13 @@ func TestHandler(t *testing.T) {
 			},
 			Want: `Nov 11 23:00:00.000 ERR test`,
 		},
-		{ // https://github.com/lmittmann/tint/pull/27
+		{ // https://github.com/babbage88/tint/pull/27
 			F: func(l *slog.Logger) {
 				l.Info("test", "a", "b", slog.Group("", slog.String("c", "d")), "e", "f")
 			},
 			Want: `Nov 10 23:00:00.000 INF test a=b c=d e=f`,
 		},
-		{ // https://github.com/lmittmann/tint/pull/30
+		{ // https://github.com/babbage88/tint/pull/30
 			// drop built-in attributes in a grouped log
 			Opts: &tint.Options{
 				ReplaceAttr: drop(slog.TimeKey, slog.LevelKey, slog.MessageKey, slog.SourceKey),
@@ -319,7 +319,7 @@ func TestHandler(t *testing.T) {
 			},
 			Want: `group.key=val`,
 		},
-		{ // https://github.com/lmittmann/tint/issues/36
+		{ // https://github.com/babbage88/tint/issues/36
 			Opts: &tint.Options{
 				ReplaceAttr: func(g []string, a slog.Attr) slog.Attr {
 					if len(g) == 0 && a.Key == slog.LevelKey {
@@ -334,7 +334,7 @@ func TestHandler(t *testing.T) {
 			},
 			Want: `Nov 10 23:00:00.000 INF test`,
 		},
-		{ // https://github.com/lmittmann/tint/issues/37
+		{ // https://github.com/babbage88/tint/issues/37
 			Opts: &tint.Options{
 				AddSource: true,
 				ReplaceAttr: func(g []string, a slog.Attr) slog.Attr {
@@ -347,14 +347,14 @@ func TestHandler(t *testing.T) {
 			},
 			Want: `Nov 10 23:00:00.000 INF tint/handler_test.go:346 test`,
 		},
-		{ // https://github.com/lmittmann/tint/issues/44
+		{ // https://github.com/babbage88/tint/issues/44
 			F: func(l *slog.Logger) {
 				l = l.WithGroup("group")
 				l.Error("test", tint.Err(errTest))
 			},
 			Want: `Nov 10 23:00:00.000 ERR test group.err=fail`,
 		},
-		{ // https://github.com/lmittmann/tint/issues/55
+		{ // https://github.com/babbage88/tint/issues/55
 			F: func(l *slog.Logger) {
 				l.Info("test", "key", struct {
 					A int
@@ -363,7 +363,7 @@ func TestHandler(t *testing.T) {
 			},
 			Want: `Nov 10 23:00:00.000 INF test key="{A:123 B:<nil>}"`,
 		},
-		{ // https://github.com/lmittmann/tint/issues/59
+		{ // https://github.com/babbage88/tint/issues/59
 			Opts: &tint.Options{
 				NoColor: false,
 			},
@@ -399,7 +399,7 @@ func TestHandler(t *testing.T) {
 			},
 			Want: `Nov 10 23:00:00.000 INF test color="green quoted"`,
 		},
-		{ // https://github.com/lmittmann/tint/pull/66
+		{ // https://github.com/babbage88/tint/pull/66
 			F: func(l *slog.Logger) {
 				errAttr := tint.Err(errors.New("fail"))
 				errAttr.Key = "error"
@@ -407,7 +407,7 @@ func TestHandler(t *testing.T) {
 			},
 			Want: `Nov 10 23:00:00.000 ERR test error=fail`,
 		},
-		{ // https://github.com/lmittmann/tint/issues/85
+		{ // https://github.com/babbage88/tint/issues/85
 			F: func(l *slog.Logger) {
 				var t *time.Time
 				l.Info("test", "time", t)

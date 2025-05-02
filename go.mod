@@ -1,3 +1,3 @@
-module github.com/lmittmann/tint
+module github.com/babbage88/tint
 
-go 1.21
+go 1.24.2
